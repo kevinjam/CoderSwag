@@ -38,6 +38,5 @@ object DataService {
             Product("Developes Studio", "$18", "shirt4")
 
 
-
     )
 }
