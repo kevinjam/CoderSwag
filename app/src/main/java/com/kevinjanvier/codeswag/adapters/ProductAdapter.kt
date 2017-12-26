@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.product_list_item.view.*
 /**
  * Created by kevinjanvier on 26/12/2017.
  */
-class ProductAdapter (val context:Context, val products:List<Product>):RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
+class ProductAdapter (val context:Context, val products:List<Product>, val itemClick:(Product)->Unit):RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
 
     override fun getItemCount(): Int {
 
@@ -28,10 +28,10 @@ class ProductAdapter (val context:Context, val products:List<Product>):RecyclerV
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ProductHolder {
 
         val view = LayoutInflater.from(parent!!.context).inflate(R.layout.product_list_item, parent, false)
-        return ProductHolder(view)
+        return ProductHolder(view, itemClick)
     }
 
-    inner class ProductHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    inner class ProductHolder(itemView: View?, itemClick: (Product) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
         val productImage = itemView!!.findViewById<ImageView>(R.id.productImage)
         val productName = itemView!!.findViewById<TextView>(R.id.productTitle)
@@ -43,6 +43,10 @@ class ProductAdapter (val context:Context, val products:List<Product>):RecyclerV
             productImage.setImageResource(resourceId)
             productName.text = product.title
             productPrice.text = product.price
+
+            itemView.setOnClickListener {
+                itemClick(product)
+            }
         }
 
     }

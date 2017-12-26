@@ -5,3 +5,4 @@ package com.kevinjanvier.codeswag.Utilities
  */
 
 const val EXTRA_CATEGORY = "category"
+const val EXTRA_FINISH = "finish"
