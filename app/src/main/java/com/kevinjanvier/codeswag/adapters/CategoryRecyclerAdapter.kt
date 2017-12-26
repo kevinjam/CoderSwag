@@ -13,7 +13,7 @@ import com.kevinjanvier.codeswag.model.Category
 /**
  * Created by kevinjanvier on 26/12/2017.
  */
-class CategoryRecyclerAdapter(val context:Context, val categories:List<Category>) :RecyclerView.Adapter<CategoryRecyclerAdapter.Holder>() {
+class CategoryRecyclerAdapter(val context:Context, val categories:List<Category>, val itemClick : (Category) ->Unit) :RecyclerView.Adapter<CategoryRecyclerAdapter.Holder>() {
 
 
     override fun onBindViewHolder(holder: Holder?, position: Int) {
@@ -25,13 +25,13 @@ class CategoryRecyclerAdapter(val context:Context, val categories:List<Category>
 
         val view = LayoutInflater.from(parent!!.context).inflate(R.layout.category_list_item, parent, false)
 
-        return Holder(view)
+        return Holder(view, itemClick)
     }
 
     override fun getItemCount(): Int {return categories.size
     }
 
-    inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View?, itemClick: (Category) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
         val categoryImage:ImageView = itemView!!.findViewById(R.id.categoryImage)
         val categoryName:TextView = itemView!!.findViewById(R.id.categoryTitle)
@@ -40,6 +40,9 @@ class CategoryRecyclerAdapter(val context:Context, val categories:List<Category>
             val resourceId = context.resources.getIdentifier(category.image, "drawable", context.packageName)
             categoryImage.setImageResource(resourceId)
             categoryName.text = category.title
+
+            itemView.setOnClickListener { itemClick(category) }
+
         }
 
     }
